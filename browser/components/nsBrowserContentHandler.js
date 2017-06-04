@@ -79,6 +79,19 @@ function resolveURIInternal(aCmdLine, aArgument) {
   return uri;
 }
 
+function maybeSetupSpeculativeConnection(uristring) {
+  if (!uristring || uristring == "about:blank") {
+    return;
+  }
+  let sc = Services.io.QueryInterface(Components.interfaces.nsISpeculativeConnect);
+  try {
+    let uri = Services.io.newURI(uristring);
+    let principal = Services.scriptSecurityManager
+                    .createCodebasePrincipal(uri, {});
+    sc.speculativeConnect2(uri, principal, null);
+  } catch(e) {}
+}
+
 var gFirstWindow = false;
 
 const OVERRIDE_NONE        = 0;
@@ -173,6 +186,8 @@ function openWindow(parent, url, target, features, args, noExternalArgs) {
       argstring = Components.classes["@mozilla.org/supports-string;1"]
                             .createInstance(nsISupportsString);
       argstring.data = args;
+      // create speculative connections for each uri
+      args.split("|").forEach(maybeSetupSpeculativeConnection);
     }
 
     return Services.ww.openWindow(parent, url, target, features, argstring);
@@ -198,6 +213,8 @@ function openWindow(parent, url, target, features, args, noExternalArgs) {
                               .createInstance(nsISupportsString);
       sstring.data = uri;
       uriArray.appendElement(sstring);
+      // create speculative connections for each uri
+      maybeSetupSpeculativeConnection(uri);
     });
     argArray.appendElement(uriArray);
   } else {
