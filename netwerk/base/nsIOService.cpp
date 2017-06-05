@@ -58,6 +58,7 @@
 #include "nsContentSecurityManager.h"
 #include "nsContentUtils.h"
 #include "xpcpublic.h"
+#include "GeckoProfiler.h"
 
 namespace mozilla {
 namespace net {
@@ -1825,6 +1826,7 @@ nsIOService::SpeculativeConnectInternal(nsIURI *aURI,
                                         nsIInterfaceRequestor *aCallbacks,
                                         bool aAnonymous)
 {
+    PROFILER_MARKER("Evelyn ===> SpeculatvieConnectInternal");
     bool isHTTP, isHTTPS;
     if (!(NS_SUCCEEDED(aURI->SchemeIs("http", &isHTTP)) && isHTTP) &&
         !(NS_SUCCEEDED(aURI->SchemeIs("https", &isHTTPS)) && isHTTPS)) {

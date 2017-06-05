@@ -80,6 +80,7 @@ function resolveURIInternal(aCmdLine, aArgument) {
 }
 
 function maybeSetupSpeculativeConnection(uristring) {
+  dump(`\n\n=======> maybeSetupSpeculativeConnection: ${uristring} \n\n`);
   if (!uristring || uristring == "about:blank") {
     return;
   }
@@ -88,6 +89,8 @@ function maybeSetupSpeculativeConnection(uristring) {
     let uri = Services.io.newURI(uristring);
     let principal = Services.scriptSecurityManager
                     .createCodebasePrincipal(uri, {});
+    dump(`\n\n=======> call speculativeConnect2: ${uristring} \n\n`);
+    Services.profiler.AddMarker("Evelyn ===> call speculativeConnect2");
     sc.speculativeConnect2(uri, principal, null);
   } catch(e) {}
 }
@@ -188,6 +191,7 @@ function openWindow(parent, url, target, features, args, noExternalArgs) {
       argstring.data = args;
       // create speculative connections for each uri
       args.split("|").forEach(maybeSetupSpeculativeConnection);
+      dump(`\n\n=======> call maybeSetupSpeculativeConnection from default args: ${args} \n\n`);
     }
 
     return Services.ww.openWindow(parent, url, target, features, argstring);
@@ -215,6 +219,7 @@ function openWindow(parent, url, target, features, args, noExternalArgs) {
       uriArray.appendElement(sstring);
       // create speculative connections for each uri
       maybeSetupSpeculativeConnection(uri);
+      dump(`\n\n=======> call maybeSetupSpeculativeConnection from uri: ${uri} \n\n`);
     });
     argArray.appendElement(uriArray);
   } else {
