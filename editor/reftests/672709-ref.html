@@ -1,10 +1,6 @@
 <!DOCTYPE html>
 <html class="reftest-wait">
-  <body>
-    <style>
-      :-moz-read-only { color: red; }
-      :-moz-read-write { color: green; }
-    </style>
+  <head>
     <script>
       onload = function() {
         document.designMode = "on";
@@ -15,6 +11,12 @@
         document.documentElement.removeAttribute("class");
       };
     </script>
+  </head>
+  <body>
+    <style>
+      :-moz-read-only { color: red; }
+      :-moz-read-write { color: green; }
+    </style>
     <div contenteditable id="x">
     </div>
     more test
