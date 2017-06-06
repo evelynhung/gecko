@@ -1417,6 +1417,10 @@ var gBrowserInit = {
     });
 
     let uriToLoad = this._getUriToLoad();
+
+    dump(`\n\n=======> Evelyn: start load uri \n\n`);
+    Services.profiler.AddMarker("Evelyn =====> start load uri");
+
     if (uriToLoad && uriToLoad != "about:blank") {
       if (uriToLoad instanceof Ci.nsIArray) {
         let count = uriToLoad.length;

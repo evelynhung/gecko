@@ -36,6 +36,7 @@
 #include "mozilla/SizePrintfMacros.h"
 #include "mozilla/Unused.h"
 #include "nsIURI.h"
+#include "GeckoProfiler.h"
 
 #include "mozilla/Move.h"
 #include "mozilla/Telemetry.h"
@@ -4276,6 +4277,10 @@ nsHalfOpenSocket::SetupConn(nsIAsyncOutputStream *out,
     MOZ_ASSERT(!aFastOpen || (out == mStreamOut));
     // assign the new socket to the http connection
     RefPtr<nsHttpConnection> conn = new nsHttpConnection();
+    if (mSpeculative) {
+        printf("\n====> Evelyn: Created new speculative connection %p\n", conn.get());
+        PROFILER_MARKER("Evelyn ===> nsHalfOpenSocket::SetupConn");
+    }
     LOG(("nsHalfOpenSocket::SetupConn "
          "Created new nshttpconnection %p\n", conn.get()));
 

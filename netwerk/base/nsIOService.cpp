@@ -1826,6 +1826,7 @@ nsIOService::SpeculativeConnectInternal(nsIURI *aURI,
                                         nsIInterfaceRequestor *aCallbacks,
                                         bool aAnonymous)
 {
+    printf("\nEvelyn ===> SpeculatvieConnectInternal\n");
     PROFILER_MARKER("Evelyn ===> SpeculatvieConnectInternal");
     bool isHTTP, isHTTPS;
     if (!(NS_SUCCEEDED(aURI->SchemeIs("http", &isHTTP)) && isHTTP) &&

@@ -26,6 +26,7 @@
 #include "nsISeekableStream.h"
 #include "nsMultiplexInputStream.h"
 #include "nsStringStream.h"
+#include "GeckoProfiler.h"
 
 #include "nsComponentManagerUtils.h" // do_CreateInstance
 #include "nsIHttpActivityObserver.h"
@@ -516,6 +517,11 @@ nsHttpTransaction::OnActivated(bool h2)
     if (mActivated) {
         return;
     }
+
+    nsAutoCString requestOrigin;
+    mRequestHead->Origin(requestOrigin);
+    printf("\n ====> Evelyn: origin = %s\n", requestOrigin.get());
+    PROFILER_MARKER("Evelyn ===> nsHttpTransaction::OnActivated");
 
     mActivated = true;
     gHttpHandler->ConnMgr()->AddActiveTransaction(
