@@ -72,6 +72,19 @@ RemoteWebNavigation.prototype = {
   },
   loadURIWithOptions(aURI, aLoadFlags, aReferrer, aReferrerPolicy,
                      aPostData, aHeaders, aBaseURI, aTriggeringPrincipal) {
+    // We know the url is going to be loaded, let's start requesting network
+    // connection before the content process asks.
+    // Note that we might have already setup the speculative connection in some
+    // cases, especially when the url is from location bar or its popup menu.
+    if (aURI.startsWith("http")) {
+      try {
+        let uri = makeURI(aURI);
+        Services.io.speculativeConnect2(uri, aTriggeringPrincipal, null);
+      } catch (ex) {
+        // Can't setup speculative connection for this uri string for some
+        // reason, just ignore it.
+      }
+    }
     this._sendMessage("WebNavigation:LoadURI", {
       uri: aURI,
       flags: aLoadFlags,
