@@ -173,14 +173,14 @@ this.IsolationTestTools = {
    */
   _add_task(aTask) {
     let testSettings = [
-      { mode: TEST_MODE_FIRSTPARTY,
+      /*{ mode: TEST_MODE_FIRSTPARTY,
         skip: false,
         prefs: [["privacy.firstparty.isolate", true]]
       },
       { mode: TEST_MODE_NO_ISOLATION,
         skip: false,
         prefs: [["privacy.firstparty.isolate", false]]
-      },
+      },*/
       { mode: TEST_MODE_CONTAINERS,
         skip: false,
         prefs: [["privacy.userContext.enabled", true]]

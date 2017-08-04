@@ -2394,7 +2394,13 @@
         <body>
           <![CDATA[
             "use strict";
-
+            dump(`\n\n====> tabbrowser.xml aURI: ${aURI}\n`);
+            dump(`\n\n====> tabbrowser.xml arguments[1].triggeringPrincipal? ${arguments[1].triggeringPrincipal}\n`);
+            if (arguments[1].triggeringPrincipal) {
+              dump(`\n\n====> tabbrowser.xml arguments[1].context id? ${arguments[1].triggeringPrincipal.originAttributes.userContextId}\n`);
+            }
+            let error = new Error();
+            dump(`\n\n====> tabbrowser.xml stack ${error.stack}\n\n`);
             const NS_XUL = "http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul";
             var aTriggeringPrincipal;
             var aReferrerPolicy;
@@ -8135,6 +8141,7 @@
         <body>
           <![CDATA[
             var params = arguments[1];
+            dump(`\n\n=====> userContextId? ${params.triggeringPrincipal.originAttributes.userContextId}\n\n`);
             if (typeof(params) == "number") {
               params = {
                 flags: aFlags,

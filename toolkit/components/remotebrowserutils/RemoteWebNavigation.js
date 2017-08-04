@@ -76,7 +76,10 @@ RemoteWebNavigation.prototype = {
     // connection before the content process asks.
     // Note that we might have already setup the speculative connection in some
     // cases, especially when the url is from location bar or its popup menu.
+    let error = new Error();
     if (aURI.startsWith("http")) {
+      //dump(`\n\n====> error.stack ${error.stack}\n\n`);
+      dump(`\n\n====> aTriggeringPrincipal.originAttributes.userContextId = ${aTriggeringPrincipal.originAttributes.userContextId}!!! for ${aURI}\n\n`);
       try {
         let uri = makeURI(aURI);
         Services.io.speculativeConnect2(uri, aTriggeringPrincipal, null);
