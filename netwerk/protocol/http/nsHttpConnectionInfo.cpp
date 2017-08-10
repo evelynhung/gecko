@@ -225,6 +225,7 @@ void nsHttpConnectionInfo::BuildHashKey()
 
     nsAutoCString originAttributes;
     mOriginAttributes.CreateSuffix(originAttributes);
+    printf("=====>[nsHttpConnectionInfo] BuildHashKey with originAttributes? %s\n", originAttributes.get());
     mHashKey.Append(originAttributes);
 }
 

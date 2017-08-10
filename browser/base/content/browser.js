@@ -1130,6 +1130,7 @@ function _loadURIWithFlags(browser, uri, params) {
   }
   try {
     if (!mustChangeProcess) {
+      dump(`\n\n=====>[browser.js] params.userContextId = ${params.userContextId} \n\n`);
       if (params.userContextId) {
         browser.webNavigation.setOriginAttributesBeforeLoading({ userContextId: params.userContextId });
       }

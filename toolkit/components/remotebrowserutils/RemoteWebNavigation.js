@@ -77,6 +77,14 @@ RemoteWebNavigation.prototype = {
     // Note that we might have already setup the speculative connection in some
     // cases, especially when the url is from location bar or its popup menu.
     if (aURI.startsWith("http")) {
+      if (aTriggeringPrincipal) {
+        dump(`\n\n====> [RemoteWebNavigation.js] speculative with aTriggeringPrincipal for ${aURI}\n`);
+        dump(`    appId = ${aTriggeringPrincipal.originAttributes.appId}\n`);
+        dump(`    userContextId = ${aTriggeringPrincipal.originAttributes.userContextId}\n`);
+        dump(`    inIsolatedMozBrowser = ${aTriggeringPrincipal.originAttributes.inIsolatedMozBrowser}\n`);
+        dump(`    privateBrowsingId = ${aTriggeringPrincipal.originAttributes.privateBrowsingId}\n`);
+        dump(`    firstPartyDomain = ${aTriggeringPrincipal.originAttributes.firstPartyDomain}\n`);
+      }
       try {
         let uri = makeURI(aURI);
         Services.io.speculativeConnect2(uri, aTriggeringPrincipal, null);

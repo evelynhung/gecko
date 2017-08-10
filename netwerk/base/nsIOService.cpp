@@ -1857,6 +1857,11 @@ nsIOService::SpeculativeConnectInternal(nsIURI *aURI,
 
     NS_ASSERTION(aPrincipal, "We expect passing a principal here.");
 
+    /*OriginAttributes originAttr = aPrincipal->OriginAttributesRef();
+    nsAutoCString originAttrString;
+    originAttr.CreateSuffix(originAttrString);
+    printf("\n=====> [NECKO] speculative internal, pass-in originattribute: %s", originAttrString.get());*/
+
     // If the principal is given, we use this principal directly. Otherwise,
     // we fallback to use the system principal.
     if (!aPrincipal) {

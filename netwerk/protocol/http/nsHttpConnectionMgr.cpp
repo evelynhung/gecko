@@ -3564,6 +3564,10 @@ nsHttpConnectionMgr::GetOrCreateConnectionEntry(nsHttpConnectionInfo *specificCI
 {
     // step 1
     nsConnectionEntry *specificEnt = mCT.GetWeak(specificCI->HashKey());
+    printf("=====> nsHttpConnectionMgr::GetOrCreateConnectionEntry [ci=%s]\n", specificCI->HashKey().get());
+    if (specificEnt) {
+        printf("=====> nsHttpConnectionMgr::GetOrCreateConnectionEntry specificEnt's halfopens: %d\n", specificEnt->mHalfOpens.Length());
+    }
     if (specificEnt && specificEnt->AvailableForDispatchNow()) {
         return specificEnt;
     }
@@ -3623,8 +3627,8 @@ nsHttpConnectionMgr::OnMsgSpeculativeConnect(int32_t, ARefBase *param)
 
     SpeculativeConnectArgs *args = static_cast<SpeculativeConnectArgs *>(param);
 
-    LOG(("nsHttpConnectionMgr::OnMsgSpeculativeConnect [ci=%s]\n",
-         args->mTrans->ConnectionInfo()->HashKey().get()));
+    printf("=====> nsHttpConnectionMgr::OnMsgSpeculativeConnect [ci=%s]\n",
+         args->mTrans->ConnectionInfo()->HashKey().get());
 
     nsConnectionEntry *ent =
         GetOrCreateConnectionEntry(args->mTrans->ConnectionInfo(), false);

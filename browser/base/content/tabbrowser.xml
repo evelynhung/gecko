@@ -2394,7 +2394,7 @@
         <body>
           <![CDATA[
             "use strict";
-
+            dump(`\n====> [tabbrowser.xml] aURI: ${aURI}\n`);
             const NS_XUL = "http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul";
             var aTriggeringPrincipal;
             var aReferrerPolicy;
@@ -2489,13 +2489,14 @@
             if (aUserContextId == null &&
                 (aRelatedToCurrent == null ? aReferrerURI : aRelatedToCurrent)) {
               aUserContextId = this.mCurrentTab.getAttribute("usercontextid") || 0;
+              dump(`====> [tabbrowser.xml] aUserContextId was null but now it becomes ${aUserContextId}\n`);
             }
 
             if (aUserContextId) {
               t.setAttribute("usercontextid", aUserContextId);
               ContextualIdentityService.setTabStyle(t);
             }
-
+            dump(`====> [tabbrowser.xml] ***** final aUserContextId is ${aUserContextId} *****\n`);
             t.setAttribute("onerror", "this.removeAttribute('image');");
 
             if (aSkipBackgroundNotify) {
@@ -2566,7 +2567,7 @@
                 usingPreloadedContent = true;
               }
             }
-
+            dump(`====> [tabbrowser.xml] final remoteType is ${remoteType}\n`);
             if (!b) {
               // No preloaded browser found, create one.
               b = this._createBrowser({ remoteType,
